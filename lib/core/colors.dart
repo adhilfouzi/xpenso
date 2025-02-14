@@ -6,7 +6,7 @@ class MyColors {
   static const Color secondary = Color(0xFF1E294D);
 
   // Light Theme Colors
-  static const Color lightBackground = Color(0xFFF8F8F8);
+  static const Color lightBackground = Color(0xFFF4F4F4);
   static const Color lightSurface = Color(0xFFFFFFFF);
   static const Color lightPrimaryText = Color(0xFF0D0D0E);
   static const Color lightSecondaryText = Color(0xFF202225);

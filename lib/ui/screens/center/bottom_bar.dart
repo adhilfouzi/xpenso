@@ -58,7 +58,7 @@ class _BottomBarState extends State<BottomBar>
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: Color(0xFFF4F4F4),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
