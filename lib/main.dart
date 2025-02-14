@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ui/screens/home/home_screen.dart';
+import 'ui/screens/center/bottom_bar.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,11 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(useMaterial3: true),
+      home: const BottomBar(),
     );
   }
 }
