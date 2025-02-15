@@ -11,10 +11,13 @@ class TransactionProvider with ChangeNotifier {
 
   List<TransactionModel> _transactions = [];
   List<TransactionModel> get transactions => _transactions;
+  List<TransactionModel> _allTransactions = [];
+  List<TransactionModel> get allTransactionsList => _allTransactions;
 
   double _totalIncome = 0.0;
   double _totalExpenses = 0.0;
   bool isExpense = true;
+  String allTransactions = 'All';
 
   double get totalIncome => _totalIncome;
   double get totalExpenses => _totalExpenses;
@@ -27,6 +30,9 @@ class TransactionProvider with ChangeNotifier {
   double get totalBalance => _income - _expenses;
   TransactionProvider() {
     init();
+  }
+  bool whichType(String value) {
+    return allTransactions == value;
   }
 
   /// Initialize Hive and Load Data
@@ -47,6 +53,7 @@ class TransactionProvider with ChangeNotifier {
     _income = _balanceBox.get("income", defaultValue: 0.00)!;
     _expenses = _balanceBox.get("expenses", defaultValue: 0.00)!;
     _transactions = _transactionBox.values.toList();
+    _allTransactions = transactions;
 
     _calculateTotals();
     notifyListeners();
@@ -144,6 +151,21 @@ class TransactionProvider with ChangeNotifier {
 
   void setIsExpense(bool value) {
     isExpense = value;
+    notifyListeners();
+  }
+
+  void setWhichType(String value) {
+    allTransactions = value;
+    if (value == 'expenses') {
+      _allTransactions = _transactions
+          .where((t) => t.type == TransactionType.expense)
+          .toList();
+    } else if (value == 'income') {
+      _allTransactions =
+          _transactions.where((t) => t.type == TransactionType.income).toList();
+    } else {
+      _allTransactions = List.from(_transactions);
+    }
     notifyListeners();
   }
 }

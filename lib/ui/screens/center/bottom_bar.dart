@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/colors.dart';
 import '../home/add_transaction_screen.dart';
+import '../home/all_transaction_screen.dart';
 import '../home/home_screen.dart';
 import '../home/wallet_screen.dart';
 
@@ -21,7 +22,7 @@ class _BottomBarState extends State<BottomBar>
     HomeScreen(),
     AddTransactionScreen(),
     WalletScreen(),
-    HomeScreen(),
+    AllTransactionScreen(),
   ];
 
   @override
