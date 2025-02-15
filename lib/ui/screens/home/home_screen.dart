@@ -13,47 +13,92 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: const HeaderWidget(),
-      body: HomeScreenBody(),
+      body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [MyColors.primary, Colors.white],
+              begin: Alignment.topCenter,
+              end: Alignment.center,
+            ),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: const BalanceCardWidget(),
+              ),
+              Expanded(child: TransactionHistory()),
+            ],
+          )),
     );
   }
 }
 
-class HomeScreenBody extends StatelessWidget {
-  const HomeScreenBody({super.key});
+class TransactionHistory extends StatelessWidget {
+  const TransactionHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final transactionProvider =
-    //     Provider.of<TransactionProvider>(context, listen: false);
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [MyColors.primary, Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.center,
-        ),
-      ),
-      child: FutureBuilder(
-        future: TransactionProvider().init(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Consumer<TransactionProvider>(
-            builder: (context, provider, child) {
-              return Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  children: [
-                    const BalanceCardWidget(),
-                    Expanded(child: TransactionHistoryWidget(provider)),
-                  ],
+    return FutureBuilder(
+      future: TransactionProvider().init(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return Consumer<TransactionProvider>(
+          builder: (context, provider, child) {
+            return Padding(
+              padding: const EdgeInsets.all(15),
+              child: Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Transactions History',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text('See All',
+                                style: TextStyle(
+                                    color: Color(0xFF238C98), fontSize: 16)),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: provider.transactions.isEmpty
+                            ? const Center(
+                                child: Text("No transactions available"))
+                            : ListView.builder(
+                                itemCount: provider.transactions.length,
+                                itemBuilder: (context, index) {
+                                  final transaction =
+                                      provider.transactions[index];
+                                  return TransactionTileWidget(
+                                    title: transaction.title,
+                                    subtitle:
+                                        transaction.date.toIso8601String(),
+                                    amount: transaction.amount,
+                                    isIncome: transaction.type ==
+                                        TransactionType.income,
+                                    assetPath: Images.profile[index % 10],
+                                  );
+                                },
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            },
-          );
-        },
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -137,55 +182,6 @@ class BalanceCardWidget extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w600)),
       ],
-    );
-  }
-}
-
-class TransactionHistoryWidget extends StatelessWidget {
-  final TransactionProvider transactionProvider;
-
-  const TransactionHistoryWidget(this.transactionProvider, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Transactions History',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              TextButton(
-                onPressed: () {},
-                child: const Text('See All',
-                    style: TextStyle(color: Color(0xFF238C98), fontSize: 16)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: transactionProvider.transactions.isEmpty
-                ? const Center(child: Text("No transactions available"))
-                : ListView.builder(
-                    itemCount: transactionProvider.transactions.length,
-                    itemBuilder: (context, index) {
-                      final transaction =
-                          transactionProvider.transactions[index];
-                      return TransactionTileWidget(
-                        title: transaction.title,
-                        subtitle: transaction.date.toIso8601String(),
-                        amount: transaction.amount,
-                        isIncome: transaction.type == TransactionType.income,
-                        assetPath: Images.profile[index % 10],
-                      );
-                    },
-                  ),
-          ),
-        ],
-      ),
     );
   }
 }
