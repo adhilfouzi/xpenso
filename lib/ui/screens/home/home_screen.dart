@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../../core/colors.dart';
 import '../../../core/images.dart';
+import '../../../providers/transaction_provider.dart';
+import '../../../data/model/transaction_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,16 +11,48 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF4F4F4),
+      extendBodyBehindAppBar: false,
       appBar: const HeaderWidget(),
-      body: Padding(
-        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-        child: Column(
-          children: [
-            const BalanceCardWidget(),
-            const Expanded(child: TransactionHistoryWidget()),
-          ],
+      body: HomeScreenBody(),
+    );
+  }
+}
+
+class HomeScreenBody extends StatelessWidget {
+  const HomeScreenBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // final transactionProvider =
+    //     Provider.of<TransactionProvider>(context, listen: false);
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [MyColors.primary, Colors.white],
+          begin: Alignment.topCenter,
+          end: Alignment.center,
         ),
+      ),
+      child: FutureBuilder(
+        future: TransactionProvider().init(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Consumer<TransactionProvider>(
+            builder: (context, provider, child) {
+              return Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    const BalanceCardWidget(),
+                    Expanded(child: TransactionHistoryWidget(provider)),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -29,7 +64,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: MyColors.primary,
       elevation: 0,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,12 +87,13 @@ class BalanceCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final transactionProvider = Provider.of<TransactionProvider>(context);
     return Container(
-      padding: EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
-        color: Color(0xFF238C98),
+        color: const Color(0xFF238C98),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 15,
@@ -68,20 +104,20 @@ class BalanceCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Total Balance',
+          const Text('Total Balance',
               style: TextStyle(color: Colors.white70, fontSize: 18)),
-          SizedBox(height: 10),
-          Text('\$2,548.00',
-              style: TextStyle(
+          const SizedBox(height: 10),
+          Text('\$${transactionProvider.totalBalance.toStringAsFixed(2)}',
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 30,
                   fontWeight: FontWeight.bold)),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _balanceItem('Income', '\$1,840.00'),
-              _balanceItem('Expenses', '\$284.00'),
+              _balanceItem('Income', transactionProvider.income),
+              _balanceItem('Expenses', transactionProvider.expenses),
             ],
           ),
         ],
@@ -89,13 +125,14 @@ class BalanceCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _balanceItem(String title, String amount) {
+  Widget _balanceItem(String title, double amount) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: TextStyle(color: Colors.white70, fontSize: 16)),
-        Text(amount,
-            style: TextStyle(
+        Text(title,
+            style: const TextStyle(color: Colors.white70, fontSize: 16)),
+        Text('\$${amount.toStringAsFixed(2)}',
+            style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.w600)),
@@ -105,7 +142,9 @@ class BalanceCardWidget extends StatelessWidget {
 }
 
 class TransactionHistoryWidget extends StatelessWidget {
-  const TransactionHistoryWidget({super.key});
+  final TransactionProvider transactionProvider;
+
+  const TransactionHistoryWidget(this.transactionProvider, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,28 +156,33 @@ class TransactionHistoryWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Transactions History',
+              const Text('Transactions History',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               TextButton(
                 onPressed: () {},
-                child: Text('See All',
+                child: const Text('See All',
                     style: TextStyle(color: Color(0xFF238C98), fontSize: 16)),
               ),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return TransactionTileWidget(
-                    title: 'Upwork',
-                    subtitle: 'Today',
-                    amount: 850.00,
-                    isIncome: true,
-                    assetPath: Images.profile[index % 10]);
-              },
-            ),
+            child: transactionProvider.transactions.isEmpty
+                ? const Center(child: Text("No transactions available"))
+                : ListView.builder(
+                    itemCount: transactionProvider.transactions.length,
+                    itemBuilder: (context, index) {
+                      final transaction =
+                          transactionProvider.transactions[index];
+                      return TransactionTileWidget(
+                        title: transaction.title,
+                        subtitle: transaction.date.toIso8601String(),
+                        amount: transaction.amount,
+                        isIncome: transaction.type == TransactionType.income,
+                        assetPath: Images.profile[index % 10],
+                      );
+                    },
+                  ),
           ),
         ],
       ),

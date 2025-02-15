@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/colors.dart';
+import '../home/add_transaction_screen.dart';
 import '../home/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
@@ -17,7 +18,7 @@ class _BottomBarState extends State<BottomBar>
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    HomeScreen(),
+    AddTransactionScreen(),
     HomeScreen(),
     HomeScreen(),
   ];
