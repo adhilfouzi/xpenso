@@ -13,14 +13,17 @@ class WalletScreen extends StatelessWidget {
       extendBodyBehindAppBar: false,
       appBar: AppBar(
         backgroundColor: MyColors.primary,
-        title: const Text('Wallet'),
+        title: const Text(
+          'Wallet',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
         // backgroundColor: Colors.teal,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: Container(
         decoration: const BoxDecoration(

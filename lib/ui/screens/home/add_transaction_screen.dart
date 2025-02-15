@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/colors.dart';
 import '../../../data/model/transaction_model.dart';
 import '../../../providers/transaction_provider.dart';
+import '../../../utils/formater.dart';
 
 class AddTransactionScreen extends StatelessWidget {
   const AddTransactionScreen({super.key});
@@ -26,10 +27,7 @@ class AddTransactionScreen extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
+          automaticallyImplyLeading: false,
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -190,7 +188,7 @@ class TransactionForm extends StatelessWidget {
                   title: nameController.text,
                   amount: double.tryParse(amountController.text) ?? 0.0,
                   description: descriptionController.text,
-                  date: DateTime.now(),
+                  date: Formatter.stringToDateTime(dateController.text),
                   type: transactionProvider.isExpense
                       ? TransactionType.expense
                       : TransactionType.income,

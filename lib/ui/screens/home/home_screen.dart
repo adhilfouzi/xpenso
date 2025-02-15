@@ -4,6 +4,7 @@ import '../../../core/colors.dart';
 import '../../../core/images.dart';
 import '../../../providers/transaction_provider.dart';
 import '../../../data/model/transaction_model.dart';
+import '../../../utils/formater.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -48,7 +49,7 @@ class TransactionHistory extends StatelessWidget {
         return Consumer<TransactionProvider>(
           builder: (context, provider, child) {
             return Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
               child: Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),
@@ -81,8 +82,8 @@ class TransactionHistory extends StatelessWidget {
                                       provider.transactions[index];
                                   return TransactionTileWidget(
                                     title: transaction.title,
-                                    subtitle:
-                                        transaction.date.toIso8601String(),
+                                    subtitle: Formatter.dateTimetoString(
+                                        transaction.date),
                                     amount: transaction.amount,
                                     isIncome: transaction.type ==
                                         TransactionType.income,
