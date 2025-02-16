@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
 import '../data/model/transaction_model.dart';
@@ -116,7 +118,11 @@ class TransactionProvider with ChangeNotifier {
       await _transactionBox.put(updatedTransaction.id, updatedTransaction);
       _updateTotals(oldTransaction, isAdding: false);
       _updateTotals(updatedTransaction, isAdding: true);
+      updateFromTransactions(_totalIncome, _totalExpenses);
+      log('Transaction edited: ${updatedTransaction.id}');
       notifyListeners();
+    } else {
+      log('Transaction not found: ${updatedTransaction.id}');
     }
   }
 

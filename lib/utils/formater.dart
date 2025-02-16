@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 class Formatter {
   /// Formats a DateTime object to a string in the format 'dd MMMM yyyy'
   static String dateTimetoString(DateTime date) {
-    return DateFormat('dd MMMM yyyy').format(date);
+    return DateFormat('yyyy-MM-dd').format(date);
   }
 
   /// Formats a given amount to Indian currency format with the symbol '₹'
