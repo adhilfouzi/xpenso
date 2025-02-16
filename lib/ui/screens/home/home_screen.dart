@@ -44,10 +44,10 @@ class TransactionHistory extends StatelessWidget {
         return Consumer<TransactionProvider>(
           builder: (context, provider, child) {
             return Padding(
-              padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

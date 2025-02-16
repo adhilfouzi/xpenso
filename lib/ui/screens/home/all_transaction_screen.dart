@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../core/colors.dart';
 
 import '../../../providers/transaction_provider.dart';
+import '../../widgets/back_button.dart';
 import '../../widgets/theme_container.dart';
 import 'home_screen.dart';
 
@@ -16,6 +17,7 @@ class AllTransactionScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
+        leading: MyBackButton(),
         backgroundColor: MyColors.primary,
         title: const Text(
           'Transaction',
@@ -184,22 +186,22 @@ class DateFilterWidget extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                     "Select Date Range",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   /// FROM DATE PICKER
                   GestureDetector(
@@ -217,7 +219,7 @@ class DateFilterWidget extends StatelessWidget {
                     },
                     child: _buildDateCard("From Date", fromDate),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
                   /// TO DATE PICKER (Enabled only if FROM DATE is selected)
                   GestureDetector(
@@ -238,7 +240,7 @@ class DateFilterWidget extends StatelessWidget {
                     child: _buildDateCard("To Date", toDate,
                         isDisabled: fromDate == null),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   /// APPLY FILTER BUTTON
                   ElevatedButton(
@@ -252,14 +254,14 @@ class DateFilterWidget extends StatelessWidget {
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 12),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: Colors.blue,
                       disabledBackgroundColor: Colors.grey.shade300,
                     ),
-                    child: Text("Apply Filter",
+                    child: const Text("Apply Filter",
                         style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ],
@@ -279,7 +281,7 @@ class DateFilterWidget extends StatelessWidget {
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -302,7 +304,7 @@ class DateFilterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.filter_list, color: Colors.white),
+      icon: const Icon(Icons.filter_list, color: Colors.white),
       onPressed: () => _showDateRangePicker(context),
     );
   }

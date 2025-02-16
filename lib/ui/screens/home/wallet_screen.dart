@@ -44,7 +44,6 @@ class WalletScreen extends StatelessWidget {
       builder: (context, provider, child) {
         return Container(
           decoration: const BoxDecoration(
-            // color: Colors.teal,
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
           ),
           padding: const EdgeInsets.all(20),

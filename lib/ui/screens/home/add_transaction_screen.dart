@@ -5,6 +5,7 @@ import '../../../core/snackbar.dart';
 import '../../../data/model/transaction_model.dart';
 import '../../../providers/transaction_provider.dart';
 import '../../../utils/formater.dart';
+import '../../widgets/back_button.dart';
 import '../../widgets/theme_container.dart';
 
 class AddTransactionScreen extends StatelessWidget {
@@ -28,7 +29,7 @@ class AddTransactionScreen extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-          automaticallyImplyLeading: false,
+          leading: MyBackButton(),
         ),
         body: ThemeContainer(
           child: Column(
