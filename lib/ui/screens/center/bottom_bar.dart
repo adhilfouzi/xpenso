@@ -20,6 +20,7 @@ class BottomBar extends StatelessWidget {
       length: _widgetOptions.length,
       child: Scaffold(
         body: TabBarView(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           children: _widgetOptions,
         ),
         bottomNavigationBar: Container(
