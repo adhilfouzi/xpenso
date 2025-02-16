@@ -12,6 +12,10 @@ class Formatter {
     return DateFormat('yyyy-MM-dd').format(date);
   }
 
+  static String timetoString(DateTime date) {
+    return DateFormat('hh:mm a').format(date);
+  }
+
   /// Formats a given amount to Indian currency format with the symbol '₹'
   static String formatCurrency(double amount) {
     String sign = amount < 0 ? '-' : '';
