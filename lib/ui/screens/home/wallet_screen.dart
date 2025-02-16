@@ -4,6 +4,7 @@ import '../../../core/colors.dart';
 import '../../../providers/transaction_provider.dart';
 import '../../../utils/formater.dart';
 import '../../widgets/theme_container.dart';
+import 'add_transaction_screen.dart';
 import 'home_screen.dart';
 
 class WalletScreen extends StatelessWidget {
@@ -64,29 +65,31 @@ class WalletScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildActionButton(Icons.add, 'Add'),
-                  // _buildActionButton(Icons.qr_code, 'Pay'),
-                  // _buildActionButton(Icons.send, 'Send'),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AddTransactionScreen()),
+                        ),
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.add, color: Colors.teal, size: 28),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text("Add", style: const TextStyle(fontSize: 14)),
+                    ],
+                  ),
                 ],
               ),
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _buildActionButton(IconData icon, String label) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.white,
-          child: Icon(icon, color: Colors.teal, size: 28),
-        ),
-        const SizedBox(height: 5),
-        Text(label, style: const TextStyle(fontSize: 14)),
-      ],
     );
   }
 }

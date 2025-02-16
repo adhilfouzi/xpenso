@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../core/colors.dart';
-import '../home/add_transaction_screen.dart';
 import '../home/all_transaction_screen.dart';
 import '../home/home_screen.dart';
 import '../home/wallet_screen.dart';
@@ -20,7 +19,6 @@ class _BottomBarState extends State<BottomBar>
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    AddTransactionScreen(),
     WalletScreen(),
     AllTransactionScreen(),
   ];
@@ -68,7 +66,6 @@ class _BottomBarState extends State<BottomBar>
           elevation: 0,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: ''),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_balance_wallet), label: ''),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),

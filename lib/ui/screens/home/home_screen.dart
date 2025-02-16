@@ -5,6 +5,7 @@ import '../../../providers/transaction_provider.dart';
 import '../../../data/model/transaction_model.dart';
 import '../../../utils/formater.dart';
 import '../../widgets/theme_container.dart';
+import 'all_transaction_screen.dart';
 import 'transaction_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -57,7 +58,10 @@ class TransactionHistory extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AllTransactionScreen())),
                             child: const Text('See All',
                                 style: TextStyle(
                                     color: Color(0xFF238C98), fontSize: 16)),
