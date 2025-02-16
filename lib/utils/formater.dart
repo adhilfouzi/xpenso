@@ -5,6 +5,10 @@ import 'package:intl/intl.dart';
 class Formatter {
   /// Formats a DateTime object to a string in the format 'dd MMMM yyyy'
   static String dateTimetoString(DateTime date) {
+    return DateFormat('MMM dd, yyyy').format(date);
+  }
+
+  static String datetoString(DateTime date) {
     return DateFormat('yyyy-MM-dd').format(date);
   }
 

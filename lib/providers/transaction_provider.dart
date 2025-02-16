@@ -98,6 +98,7 @@ class TransactionProvider with ChangeNotifier {
     _expenses = newExpenses;
     _updateBalanceBox("income", _income);
     _updateBalanceBox("expenses", _expenses);
+    _transactions.sort((a, b) => b.date.compareTo(a.date));
     _allTransactions = List.from(_transactions);
     notifyListeners();
   }

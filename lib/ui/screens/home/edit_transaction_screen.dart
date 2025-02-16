@@ -23,8 +23,8 @@ class EditTransactionScreen extends StatelessWidget {
         TextEditingController(text: transaction.amount.toString());
     final descriptionController =
         TextEditingController(text: transaction.description);
-    final dateController = TextEditingController(
-        text: Formatter.dateTimetoString(transaction.date));
+    final dateController =
+        TextEditingController(text: Formatter.datetoString(transaction.date));
     final screen = MediaQuery.of(context).size;
     log('Transaction edited: ${transaction.id}');
 
