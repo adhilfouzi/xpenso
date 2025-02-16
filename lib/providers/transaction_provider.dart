@@ -17,7 +17,7 @@ class TransactionProvider with ChangeNotifier {
   double _totalIncome = 0.0;
   double _totalExpenses = 0.0;
   bool isExpense = true;
-  String allTransactions = 'All';
+  String transactionsType = 'All';
 
   double get totalIncome => _totalIncome;
   double get totalExpenses => _totalExpenses;
@@ -28,11 +28,15 @@ class TransactionProvider with ChangeNotifier {
   double get income => _income;
   double get expenses => _expenses;
   double get totalBalance => _income - _expenses;
+
+  List<TransactionModel> _filteredTransactions = [];
+  List<TransactionModel> get filteredTransactions => _filteredTransactions;
+
   TransactionProvider() {
     init();
   }
   bool whichType(String value) {
-    return allTransactions == value;
+    return transactionsType == value;
   }
 
   /// Initialize Hive and Load Data
@@ -53,9 +57,11 @@ class TransactionProvider with ChangeNotifier {
     _income = _balanceBox.get("income", defaultValue: 0.00)!;
     _expenses = _balanceBox.get("expenses", defaultValue: 0.00)!;
     _transactions = _transactionBox.values.toList();
-    _allTransactions = transactions;
+    _transactions.sort((a, b) => b.date.compareTo(a.date));
+    _filteredTransactions = List.from(_transactions);
 
     _calculateTotals();
+    setWhichType();
     notifyListeners();
   }
 
@@ -63,6 +69,7 @@ class TransactionProvider with ChangeNotifier {
     if (_balanceBox.isOpen) {
       _balanceBox.put(key, value);
     }
+    setWhichType();
   }
 
   void updateIncome(double amount) {
@@ -89,6 +96,7 @@ class TransactionProvider with ChangeNotifier {
     _expenses = newExpenses;
     _updateBalanceBox("income", _income);
     _updateBalanceBox("expenses", _expenses);
+    _allTransactions = List.from(_transactions);
     notifyListeners();
   }
 
@@ -154,18 +162,29 @@ class TransactionProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setWhichType(String value) {
-    allTransactions = value;
+  void setWhichType() {
+    String value = transactionsType;
     if (value == 'expenses') {
-      _allTransactions = _transactions
+      _allTransactions = _filteredTransactions
           .where((t) => t.type == TransactionType.expense)
           .toList();
     } else if (value == 'income') {
-      _allTransactions =
-          _transactions.where((t) => t.type == TransactionType.income).toList();
+      _allTransactions = _filteredTransactions
+          .where((t) => t.type == TransactionType.income)
+          .toList();
     } else {
-      _allTransactions = List.from(_transactions);
+      _allTransactions = List.from(_filteredTransactions);
     }
+
+    notifyListeners();
+  }
+
+  void filterTransactionsByDateRange(DateTime fromDate, DateTime toDate) {
+    _filteredTransactions = _transactions.where((t) {
+      return t.date.isAfter(fromDate.subtract(Duration(days: 1))) &&
+          t.date.isBefore(toDate.add(Duration(days: 1)));
+    }).toList();
+    setWhichType();
     notifyListeners();
   }
 }
