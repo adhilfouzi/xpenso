@@ -45,46 +45,44 @@ class TransactionHistory extends StatelessWidget {
           builder: (context, provider, child) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Transactions History',
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Transactions History',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllTransactionScreen())),
+                          child: const Text('See All',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          TextButton(
-                            onPressed: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AllTransactionScreen())),
-                            child: const Text('See All',
-                                style: TextStyle(
-                                    color: Color(0xFF238C98), fontSize: 16)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Expanded(
-                        child: provider.transactions.isEmpty
-                            ? const Center(
-                                child: Text("No transactions available"))
-                            : ListView.builder(
-                                itemCount: provider.transactions.length,
-                                itemBuilder: (context, index) {
-                                  final transaction =
-                                      provider.transactions[index];
-                                  return TransactionTileWidget(
-                                      details: transaction);
-                                },
-                              ),
-                      ),
-                    ],
-                  ),
+                                  color: Color(0xFF238C98), fontSize: 16)),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: provider.transactions.isEmpty
+                          ? const Center(
+                              child: Text("No transactions available"))
+                          : ListView.builder(
+                              itemCount: provider.transactions.length,
+                              itemBuilder: (context, index) {
+                                final transaction =
+                                    provider.transactions[index];
+                                return TransactionTileWidget(
+                                    details: transaction);
+                              },
+                            ),
+                    ),
+                  ],
                 ),
               ),
             );

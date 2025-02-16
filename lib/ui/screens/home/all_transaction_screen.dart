@@ -148,23 +148,18 @@ class TransactionAllHistory extends StatelessWidget {
           builder: (context, provider, child) {
             return Padding(
               padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
-              child: Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Expanded(
-                    child: provider.allTransactionsList.isEmpty
-                        ? const Center(child: Text("No transactions available"))
-                        : ListView.builder(
-                            itemCount: provider.allTransactionsList.length,
-                            itemBuilder: (context, index) {
-                              final transaction =
-                                  provider.allTransactionsList[index];
-                              return TransactionTileWidget(
-                                  details: transaction);
-                            },
-                          ),
-                  ),
-                ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: provider.allTransactionsList.isEmpty
+                    ? const Center(child: Text("No transactions available"))
+                    : ListView.builder(
+                        itemCount: provider.allTransactionsList.length,
+                        itemBuilder: (context, index) {
+                          final transaction =
+                              provider.allTransactionsList[index];
+                          return TransactionTileWidget(details: transaction);
+                        },
+                      ),
               ),
             );
           },
