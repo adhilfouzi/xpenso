@@ -47,4 +47,14 @@ class InputValidators {
     }
     return null;
   }
+
+  /// Validate if the value is a valid number.
+  static String? validateNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Number cannot be empty';
+    } else if (!RegExp(r'^\d+$').hasMatch(value)) {
+      return 'Invalid number format';
+    }
+    return null;
+  }
 }

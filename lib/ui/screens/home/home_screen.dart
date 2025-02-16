@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/colors.dart';
-import '../../../core/images.dart';
 import '../../../providers/transaction_provider.dart';
 import '../../../data/model/transaction_model.dart';
 import '../../../utils/formater.dart';
+import '../../widgets/theme_container.dart';
+import 'transaction_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,23 +15,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: const HeaderWidget(),
-      body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [MyColors.primary, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.center,
-            ),
-          ),
+      body: ThemeContainer(
           child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: const BalanceCardWidget(),
-              ),
-              Expanded(child: TransactionHistory()),
-            ],
-          )),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: const BalanceCardWidget(),
+          ),
+          Expanded(child: TransactionHistory()),
+        ],
+      )),
     );
   }
 }
@@ -81,14 +75,7 @@ class TransactionHistory extends StatelessWidget {
                                   final transaction =
                                       provider.transactions[index];
                                   return TransactionTileWidget(
-                                    title: transaction.title,
-                                    subtitle: Formatter.dateTimetoString(
-                                        transaction.date),
-                                    amount: transaction.amount,
-                                    isIncome: transaction.type ==
-                                        TransactionType.income,
-                                    assetPath: Images.profile[index % 10],
-                                  );
+                                      details: transaction);
                                 },
                               ),
                       ),
@@ -153,7 +140,7 @@ class BalanceCardWidget extends StatelessWidget {
           const Text('Total Balance',
               style: TextStyle(color: Colors.white70, fontSize: 18)),
           const SizedBox(height: 10),
-          Text('\$${transactionProvider.totalBalance.toStringAsFixed(2)}',
+          Text(Formatter.formatCurrency(transactionProvider.totalBalance),
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -162,8 +149,10 @@ class BalanceCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _balanceItem('Income', transactionProvider.income),
-              _balanceItem('Expenses', transactionProvider.expenses),
+              _balanceItem('Income',
+                  Formatter.formatCurrency(transactionProvider.income)),
+              _balanceItem('Expenses',
+                  Formatter.formatCurrency(transactionProvider.expenses)),
             ],
           ),
         ],
@@ -171,13 +160,13 @@ class BalanceCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _balanceItem(String title, double amount) {
+  Widget _balanceItem(String title, String amount) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title,
             style: const TextStyle(color: Colors.white70, fontSize: 16)),
-        Text('\$${amount.toStringAsFixed(2)}',
+        Text(amount,
             style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -188,43 +177,39 @@ class BalanceCardWidget extends StatelessWidget {
 }
 
 class TransactionTileWidget extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final double amount;
-  final bool isIncome;
-  final String assetPath;
+  final TransactionModel details;
 
-  const TransactionTileWidget({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.amount,
-    required this.isIncome,
-    required this.assetPath,
-  });
+  const TransactionTileWidget({super.key, required this.details});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      margin: EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(assetPath),
-          radius: 30,
-        ),
-        title: Text(title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-        subtitle:
-            Text(subtitle, style: TextStyle(color: Colors.grey, fontSize: 14)),
-        trailing: Text(
-          '${isIncome ? '+ ' : '- '}\$${amount.toStringAsFixed(2)}',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              color: isIncome ? Colors.green : Colors.red),
+    bool isIncome = TransactionType.income == details.type;
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => TransactionDetailsScreen(
+                transaction: details,
+              ))),
+      child: Card(
+        elevation: 5,
+        margin: EdgeInsets.symmetric(vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          // leading: CircleAvatar(
+          //   backgroundImage: AssetImage(assetPath),
+          //   radius: 30,
+          // ),
+          title: Text(details.title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          subtitle: Text(Formatter.dateTimetoString(details.date),
+              style: TextStyle(color: Colors.grey, fontSize: 14)),
+          trailing: Text(
+            '${isIncome ? '+ ' : '- '}₹${details.amount.toStringAsFixed(2)}',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: isIncome ? Colors.green : Colors.red),
+          ),
         ),
       ),
     );

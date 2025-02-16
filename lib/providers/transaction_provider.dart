@@ -125,7 +125,11 @@ class TransactionProvider with ChangeNotifier {
     if (transaction != null) {
       await _transactionBox.delete(id);
       _transactions.removeWhere((t) => t.id == id);
-      _updateTotals(transaction, isAdding: false);
+      _totalIncome -=
+          transaction.type == TransactionType.income ? transaction.amount : 0;
+      _totalExpenses -=
+          transaction.type == TransactionType.expense ? transaction.amount : 0;
+      updateFromTransactions(_totalIncome, _totalExpenses);
       notifyListeners();
     }
   }

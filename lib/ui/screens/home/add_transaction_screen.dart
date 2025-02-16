@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
-import '../../../core/colors.dart';
+import '../../../core/snackbar.dart';
 import '../../../data/model/transaction_model.dart';
 import '../../../providers/transaction_provider.dart';
 import '../../../utils/formater.dart';
+import '../../widgets/theme_container.dart';
 
 class AddTransactionScreen extends StatelessWidget {
   const AddTransactionScreen({super.key});
@@ -29,14 +30,7 @@ class AddTransactionScreen extends StatelessWidget {
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [MyColors.primary, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.center,
-            ),
-          ),
+        body: ThemeContainer(
           child: Column(
             children: [
               const SizedBox(height: 100),
@@ -182,6 +176,12 @@ class TransactionForm extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              if (nameController.text.isEmpty ||
+                  amountController.text.isEmpty ||
+                  dateController.text.isEmpty) {
+                MySnackbar.showError(context, 'Please fill in all fields');
+                return;
+              }
               transactionProvider.addTransaction(
                 TransactionModel(
                   id: DateTime.now().toString(),
@@ -257,6 +257,7 @@ class CustomTextField extends StatelessWidget {
             : null,
         decoration: InputDecoration(
           labelText: label,
+          hintText: "Enter $label",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           prefixIcon: Icon(icon),
         ),

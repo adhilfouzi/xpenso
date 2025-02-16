@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/colors.dart';
 import '../../../providers/transaction_provider.dart';
+import '../../../utils/formater.dart';
+import '../../widgets/theme_container.dart';
 import 'home_screen.dart';
 
 class WalletScreen extends StatelessWidget {
@@ -25,14 +27,7 @@ class WalletScreen extends StatelessWidget {
         // backgroundColor: Colors.teal,
         elevation: 0,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [MyColors.primary, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.center,
-          ),
-        ),
+      body: ThemeContainer(
         child: Column(
           children: [
             _buildHeader(context),
@@ -58,7 +53,7 @@ class WalletScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white70, fontSize: 16)),
               const SizedBox(height: 5),
               Text(
-                '\$${provider.totalBalance.toStringAsFixed(2)}',
+                Formatter.formatRuppe(provider.totalBalance),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 28,

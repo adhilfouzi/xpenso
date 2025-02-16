@@ -10,6 +10,21 @@ class Formatter {
 
   /// Formats a given amount to Indian currency format with the symbol '₹'
   static String formatCurrency(double amount) {
+    String sign = amount < 0 ? '-' : '';
+    amount = amount.abs();
+
+    if (amount >= 10000000) {
+      return '$sign₹${(amount / 10000000).toStringAsFixed(2)} Cr';
+    } else if (amount >= 100000) {
+      return '$sign₹${(amount / 100000).toStringAsFixed(2)} L';
+    } else if (amount >= 1000) {
+      return '$sign₹${(amount / 1000).toStringAsFixed(2)} K';
+    } else {
+      return '$sign₹${amount.toStringAsFixed(2)}';
+    }
+  }
+
+  static String formatRuppe(double amount) {
     final formatCurrency = NumberFormat.currency(locale: 'en_IN', symbol: '₹');
     return formatCurrency.format(amount);
   }

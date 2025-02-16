@@ -3,10 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/colors.dart';
-import '../../../core/images.dart';
-import '../../../data/model/transaction_model.dart';
+
 import '../../../providers/transaction_provider.dart';
-import '../../../utils/formater.dart';
+import '../../widgets/theme_container.dart';
 import 'home_screen.dart';
 
 class AllTransactionScreen extends StatelessWidget {
@@ -32,14 +31,7 @@ class AllTransactionScreen extends StatelessWidget {
           DateFilterWidget(),
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [MyColors.primary, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.center,
-          ),
-        ),
+      body: ThemeContainer(
         child: Column(
           children: [
             TransactionAllBar(),
@@ -166,14 +158,7 @@ class TransactionAllHistory extends StatelessWidget {
                               final transaction =
                                   provider.allTransactionsList[index];
                               return TransactionTileWidget(
-                                title: transaction.title,
-                                subtitle: Formatter.dateTimetoString(
-                                    transaction.date),
-                                amount: transaction.amount,
-                                isIncome:
-                                    transaction.type == TransactionType.income,
-                                assetPath: Images.profile[index % 10],
-                              );
+                                  details: transaction);
                             },
                           ),
                   ),
