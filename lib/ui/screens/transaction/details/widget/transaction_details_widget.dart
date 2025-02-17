@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../data/model/transaction_model.dart';
+import '../../../../../data/models/transaction_model.dart';
 import '../../../../../utils/formater.dart';
 import 'text_row_widget.dart';
 

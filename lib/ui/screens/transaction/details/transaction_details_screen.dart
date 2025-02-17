@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xpenso/core/colors.dart';
-import '../../../../data/model/transaction_model.dart';
+import '../../../../data/models/transaction_model.dart';
 import '../../../../providers/transaction_provider.dart';
 import '../../../widgets/theme_container.dart';
 import '../add&edit/edit_transaction_screen.dart';

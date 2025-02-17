@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../core/colors.dart';
-import '../../../../../data/model/transaction_model.dart';
+import '../../../../../data/models/transaction_model.dart';
 import '../../../../../utils/formater.dart';
 
 class TransactionAmountCard extends StatelessWidget {

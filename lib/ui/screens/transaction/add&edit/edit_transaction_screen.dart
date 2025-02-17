@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import '../../../../data/model/transaction_model.dart';
+import '../../../../data/models/transaction_model.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/theme_container.dart';
 import 'widget/transaction_form.dart';

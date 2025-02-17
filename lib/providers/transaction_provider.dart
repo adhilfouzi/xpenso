@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
-import '../data/model/transaction_model.dart';
+import '../data/models/transaction_model.dart';
 
 class TransactionProvider with ChangeNotifier {
   static const String _transactionsBoxName = "transactionsBox";
@@ -137,6 +137,7 @@ class TransactionProvider with ChangeNotifier {
       _totalExpenses -=
           transaction.type == TransactionType.expense ? transaction.amount : 0;
       updateFromTransactions(_totalIncome, _totalExpenses);
+      _allTransactions = List.from(_transactions);
       notifyListeners();
     }
   }
