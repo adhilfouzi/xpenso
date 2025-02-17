@@ -20,7 +20,8 @@ class _TransactionFormState extends State<TransactionForm> {
   late TextEditingController amountController;
   late TextEditingController descriptionController;
   late TextEditingController dateController;
-  bool get isExpense => Provider.of<TransactionProvider>(context).isExpense;
+  bool get isExpense =>
+      Provider.of<TransactionProvider>(context, listen: false).isExpense;
 
   @override
   void initState() {

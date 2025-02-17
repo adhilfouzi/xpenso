@@ -25,7 +25,7 @@ class VersionScreen extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Text(
-                'Chef Brand Version ${snapshot.data!.version}',
+                'Xpenso Version ${snapshot.data!.version}',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[600],
@@ -33,7 +33,7 @@ class VersionScreen extends StatelessWidget {
               );
             } else {
               return Text(
-                'Chef Brand Version Loading...',
+                'Xpenso Version Loading...',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[600],
