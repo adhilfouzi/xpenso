@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/colors.dart';
 import '../account/account_screen.dart';
 import '../home/home_screen.dart';
 import '../wallet/wallet_screen.dart';
@@ -31,7 +32,7 @@ class BottomBar extends StatelessWidget {
               Tab(icon: Icon(Icons.account_balance_wallet)),
               Tab(icon: Icon(Icons.person)),
             ],
-            labelColor: Theme.of(context).colorScheme.primary,
+            labelColor: MyColors.primary,
             unselectedLabelColor: Theme.of(context).colorScheme.onSurface,
             indicatorColor: Colors.transparent,
           ),
