@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:xpenso/core/colors.dart';
+
+import '../../providers/theme_provider.dart';
 
 class ThemeContainer extends StatelessWidget {
   final Widget child;
@@ -7,10 +10,14 @@ class ThemeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [MyColors.primary, Colors.white],
+          colors: isDarkMode
+              ? [Colors.black87, Colors.black]
+              : [MyColors.primary, Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.center,
         ),

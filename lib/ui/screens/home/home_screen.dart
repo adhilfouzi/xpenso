@@ -4,7 +4,7 @@ import '../../widgets/transaction_history.dart';
 import 'widget/balance_card_widget.dart';
 import 'widget/header_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget implements PreferredSizeWidget {
   const HomeScreen({super.key});
 
   @override
@@ -24,4 +24,7 @@ class HomeScreen extends StatelessWidget {
       )),
     );
   }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

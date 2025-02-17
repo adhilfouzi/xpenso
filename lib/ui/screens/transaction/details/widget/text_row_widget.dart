@@ -26,11 +26,9 @@ class TextRowWidget extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.left,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
           ),
           Spacer(),
@@ -39,11 +37,10 @@ class TextRowWidget extends StatelessWidget {
               value,
               textAlign: TextAlign.right,
               overflow: TextOverflow.clip,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade700,
-              ),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade700,
+                  ),
             ),
           ),
         ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/colors.dart';
+import '../../widgets/app_bar_widget.dart';
 import '../../widgets/theme_container.dart';
 import '../../widgets/transaction_history.dart';
 import 'widget/wallet_header.dart';
@@ -11,19 +11,7 @@ class WalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        backgroundColor: MyColors.primary,
-        title: const Text(
-          'Wallet',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ),
+      appBar: AppBarWidget(title: 'Wallet'),
       body: ThemeContainer(
         child: Column(
           children: [

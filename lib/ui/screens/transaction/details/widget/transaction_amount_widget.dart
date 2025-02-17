@@ -15,11 +15,9 @@ class TransactionAmountCard extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           Formatter.formatRuppe(transaction.amount),
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
         ),
         const SizedBox(height: 10),
         Container(
@@ -33,12 +31,12 @@ class TransactionAmountCard extends StatelessWidget {
           ),
           child: Text(
             transaction.type == TransactionType.income ? "Income" : "Expense",
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: transaction.type == TransactionType.income
-                    ? MyColors.primary
-                    : Colors.red),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: transaction.type == TransactionType.income
+                      ? MyColors.primary
+                      : Colors.red,
+                ),
           ),
         ),
       ],

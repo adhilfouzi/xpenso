@@ -9,6 +9,7 @@ import 'package:xpenso/firebase_options.dart';
 import 'package:xpenso/hive_registrar.g.dart';
 
 import 'providers/auth_provider.dart';
+import 'providers/theme_provider.dart';
 import 'providers/transaction_provider.dart';
 import 'providers/user_provider.dart';
 import 'ui/screens/auth/splash_screen.dart';
@@ -36,6 +37,7 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => TransactionProvider()),
     ChangeNotifierProvider(create: (context) => AuthProvider()),
+    ChangeNotifierProvider(create: (context) => ThemeProvider()),
     ChangeNotifierProvider(create: (context) => UserProvider()),
   ], child: const MyApp()));
 }
@@ -43,13 +45,16 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      home: const SplashScreen(),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: themeProvider.currentTheme,
+          home: SplashScreen(),
+        );
+      },
     );
   }
 }

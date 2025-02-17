@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/colors.dart';
-import '../transaction/all/all_transaction_screen.dart';
+import '../account/account_screen.dart';
 import '../home/home_screen.dart';
 import '../wallet/wallet_screen.dart';
 
@@ -10,7 +10,7 @@ class BottomBar extends StatelessWidget {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     WalletScreen(),
-    AllTransactionScreen(),
+    AccountScreen(),
   ];
 
   @override

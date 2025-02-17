@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:xpenso/core/colors.dart';
+
 import '../../../../data/models/transaction_model.dart';
 import '../../../../providers/transaction_provider.dart';
+import '../../../widgets/app_bar_widget.dart';
+import '../../../widgets/back_button.dart';
 import '../../../widgets/theme_container.dart';
 import '../add&edit/edit_transaction_screen.dart';
 import 'widget/action_button.dart';
@@ -19,23 +21,8 @@ class TransactionDetailsScreen extends StatelessWidget {
     final transactionProvider = Provider.of<TransactionProvider>(context);
     return Scaffold(
       extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        title: const Text(
-          "Transaction Details",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: MyColors.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar:
+          AppBarWidget(title: "Transaction Details", leading: MyBackButton()),
       body: ThemeContainer(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),

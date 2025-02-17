@@ -3,6 +3,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../providers/transaction_provider.dart';
+import '../../../widgets/app_bar_widget.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/theme_container.dart';
 import 'widget/transaction_bar.dart';
@@ -17,20 +18,7 @@ class AddTransactionScreen extends StatelessWidget {
     return KeyboardDismissOnTap(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text(
-            "Add Transaction",
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          centerTitle: true,
-          leading: MyBackButton(),
-        ),
+        appBar: AppBarWidget(title: "Add Transaction", leading: MyBackButton()),
         body: ThemeContainer(
           child: Column(
             children: [
