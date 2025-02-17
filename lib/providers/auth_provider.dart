@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 
 import '../core/images.dart';
 import '../core/snackbar.dart';
+import '../data/handle/firebase_exceptionhandler.dart';
 import '../data/models/user_model.dart';
 import '../data/services/auth_service.dart';
 import '../data/services/user_service.dart';
 import '../ui/screens/auth/login_screen.dart';
+import '../ui/screens/auth/sentemail_screen.dart';
 import '../ui/screens/center/bottom_bar.dart';
 import 'user_provider.dart';
 
@@ -73,6 +75,24 @@ class AuthProvider with ChangeNotifier {
       }
     } catch (e) {
       log("SigninError $e");
+    }
+  }
+
+  void requestEmailVerification(BuildContext context) async {
+    try {
+      String email = emailTextEditingController.text.trim();
+      await AuthService().sendPasswordResetEmail(email);
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const SentEmailScreen()));
+      }
+    } catch (e) {
+      if (context.mounted) {
+        Navigator.of(context).pop();
+        MySnackbar.showError(context, ExceptionHandler.handleException(e));
+      }
+    } finally {
+      emailTextEditingController.clear();
     }
   }
 

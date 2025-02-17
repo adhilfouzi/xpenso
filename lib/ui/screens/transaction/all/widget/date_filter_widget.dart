@@ -15,7 +15,7 @@ class DateFilterWidget extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -27,11 +27,15 @@ class DateFilterWidget extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     "Select Date Range",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 20),
 
                   /// FROM DATE PICKER
                   GestureDetector(
@@ -41,15 +45,34 @@ class DateFilterWidget extends StatelessWidget {
                         initialDate: now,
                         firstDate: DateTime(2000),
                         lastDate: now,
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme.light(
+                                primary: Theme.of(context).colorScheme.primary,
+                                onPrimary: Colors.white,
+                                onSurface:
+                                    Theme.of(context).colorScheme.onSurface,
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
                       );
 
                       if (picked != null) {
                         setState(() => fromDate = picked);
                       }
                     },
-                    child: _buildDateCard("From Date", fromDate),
+                    child: _buildDateCard("From Date", fromDate, context),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
 
                   /// TO DATE PICKER (Enabled only if FROM DATE is selected)
                   GestureDetector(
@@ -61,16 +84,38 @@ class DateFilterWidget extends StatelessWidget {
                               initialDate: fromDate!,
                               firstDate: fromDate!,
                               lastDate: now,
+                              builder: (context, child) {
+                                return Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: ColorScheme.light(
+                                      primary:
+                                          Theme.of(context).colorScheme.primary,
+                                      onPrimary: Colors.white,
+                                      onSurface: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
+                                    ),
+                                    textButtonTheme: TextButtonThemeData(
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                  ),
+                                  child: child!,
+                                );
+                              },
                             );
 
                             if (picked != null) {
                               setState(() => toDate = picked);
                             }
                           },
-                    child: _buildDateCard("To Date", toDate,
+                    child: _buildDateCard("To Date", toDate, context,
                         isDisabled: fromDate == null),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 25),
 
                   /// APPLY FILTER BUTTON
                   ElevatedButton(
@@ -85,14 +130,20 @@ class DateFilterWidget extends StatelessWidget {
                         : null,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 12),
+                          horizontal: 40, vertical: 15),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      backgroundColor: Colors.blue,
-                      disabledBackgroundColor: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(12)),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      disabledBackgroundColor: Theme.of(context).disabledColor,
+                      textStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
-                    child: const Text("Apply Filter",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
+                    child: Text("Apply Filter",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        )),
                   ),
                 ],
               ),
@@ -104,10 +155,10 @@ class DateFilterWidget extends StatelessWidget {
   }
 
   /// BUILD DATE CARD UI
-  Widget _buildDateCard(String label, DateTime? date,
+  Widget _buildDateCard(String label, DateTime? date, BuildContext context,
       {bool isDisabled = false}) {
     return Card(
-      color: isDisabled ? Colors.grey.shade200 : Colors.white,
+      color: isDisabled ? Theme.of(context).cardColor : Colors.grey.shade200,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
@@ -120,11 +171,15 @@ class DateFilterWidget extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: isDisabled ? Colors.grey : Colors.black,
+                color: isDisabled
+                    ? Colors.grey
+                    : Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             Icon(Icons.calendar_today,
-                color: isDisabled ? Colors.grey : Colors.blue),
+                color: isDisabled
+                    ? Theme.of(context).iconTheme.color
+                    : Colors.black),
           ],
         ),
       ),

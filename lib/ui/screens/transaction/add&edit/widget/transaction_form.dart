@@ -20,7 +20,7 @@ class _TransactionFormState extends State<TransactionForm> {
   late TextEditingController amountController;
   late TextEditingController descriptionController;
   late TextEditingController dateController;
-  late bool isExpense;
+  bool get isExpense => Provider.of<TransactionProvider>(context).isExpense;
 
   @override
   void initState() {
@@ -40,8 +40,12 @@ class _TransactionFormState extends State<TransactionForm> {
             ? Formatter.datetoString(widget.transaction!.date)
             : '');
 
-    isExpense = widget.transaction?.type == TransactionType.expense ||
-        transactionProvider.isExpense;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.transaction != null) {
+        transactionProvider
+            .setIsExpense(widget.transaction!.type == TransactionType.expense);
+      }
+    });
   }
 
   @override
