@@ -21,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
         theme.textTheme.bodyMedium?.color ?? Colors.white70;
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       backgroundColor: backgroundColor,
       appBar: AppBarWidget(title: "Profile", leading: MyBackButton()),
       body: ThemeContainer(

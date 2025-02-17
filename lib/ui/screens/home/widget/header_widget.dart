@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/colors.dart';
+import '../../../../providers/theme_provider.dart';
 import '../../../../providers/user_provider.dart';
 
 class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
@@ -11,6 +13,9 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
       builder: (context, userProvider, child) {
         return AppBar(
           elevation: 0,
+          backgroundColor: Provider.of<ThemeProvider>(context).isDarkMode
+              ? Theme.of(context).scaffoldBackgroundColor
+              : MyColors.primary,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

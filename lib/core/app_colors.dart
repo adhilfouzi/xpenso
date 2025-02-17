@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class LightThemeColors {
   static const Color primary = Color(0xFF2F7E79); // Vibrant purple
   static const Color secondary = Color(0xFF03DAC6); // Teal accent
-  static const Color background = Color(0xFF2F7E79); // Soft Gray
+  static const Color background = Color(0xFFDBE1E0); // Soft Gray
   static const Color surface = Color(0xFFFFFFFF); // Pure White
   static const Color textPrimary = Color(0xFF212121); // Dark Gray
   static const Color textSecondary = Color(0xFF757575); // Muted Gray

@@ -17,7 +17,7 @@ class EditTransactionScreen extends StatelessWidget {
 
     return KeyboardDismissOnTap(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: false,
         appBar:
             AppBarWidget(title: "Edit Transaction", leading: MyBackButton()),
         body: ThemeContainer(

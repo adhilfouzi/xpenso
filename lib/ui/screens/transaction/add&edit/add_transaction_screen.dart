@@ -17,7 +17,7 @@ class AddTransactionScreen extends StatelessWidget {
     final transactionProvider = Provider.of<TransactionProvider>(context);
     return KeyboardDismissOnTap(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: false,
         appBar: AppBarWidget(title: "Add Transaction", leading: MyBackButton()),
         body: ThemeContainer(
           child: LayoutBuilder(
