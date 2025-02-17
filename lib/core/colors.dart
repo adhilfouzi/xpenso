@@ -4,6 +4,7 @@ class MyColors {
   // Primary Colors
   static const Color primary = Color(0xFF2F7E79);
   static const Color secondary = Color(0xFF1E294D);
+  static const Color accent = Color(0xFF238C98);
 
   // Light Theme Colors
   static const Color lightBackground = Color(0xFFF4F4F4);

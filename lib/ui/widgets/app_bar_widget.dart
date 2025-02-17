@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../core/colors.dart';
+import '../../providers/theme_provider.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -14,7 +18,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: leading,
       automaticallyImplyLeading: leading == null,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Provider.of<ThemeProvider>(context).isDarkMode
+          ? Theme.of(context).scaffoldBackgroundColor
+          : MyColors.primary,
       title: Text(
         title ?? '',
         style: TextStyle(
