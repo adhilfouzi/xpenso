@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:xpenso/firebase_options.dart';
-import 'package:xpenso/hive_registrar.g.dart';
+import 'package:xpenso/data/handle/firebase_options.dart';
+import 'package:xpenso/data/handle/hive_registrar.g.dart';
 
 import 'providers/auth_provider.dart';
 import 'providers/theme_provider.dart';
